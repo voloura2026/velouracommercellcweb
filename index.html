@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Veloura Commerce LLC — considered goods for everyday rituals." />
+  <title>Veloura — Considered goods for everyday rituals</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .brand-full{font-size:22px;letter-spacing:-.04em}
+    .company-label{font-size:12px;letter-spacing:.12em;text-transform:uppercase;margin:0 0 52px;color:var(--wine);font-weight:600}
+    .contact-strip{display:grid;grid-template-columns:1fr 1fr;background:var(--sand);padding:90px 10.5vw}
+    .contact-strip h2{font-size:clamp(45px,5vw,72px)}
+    .contact-details{border-left:1px solid var(--line);padding-left:55px;display:flex;flex-direction:column;gap:10px;color:#625b52;line-height:1.5}
+    .contact-details p:first-child{font-family:var(--serif);font-size:24px;color:var(--ink);margin:0 0 8px}
+    .contact-details p{margin:0 0 12px}.contact-details a{color:var(--wine);text-decoration:underline;text-underline-offset:4px}
+    @media(max-width:800px){.contact-strip{display:block;padding:78px 7vw}.contact-details{border-left:0;border-top:1px solid var(--line);padding:30px 0 0;margin-top:34px}}
+    /* Keep company details in the footer for a cleaner storefront front. */
+    .contact-strip,.company-label{display:none!important}
+    .contact-strip.contact-visible{display:grid!important;position:fixed;z-index:20;top:50%;left:50%;transform:translate(-50%,-50%);width:min(700px,calc(100% - 40px));box-shadow:0 20px 70px rgba(0,0,0,.25)}
+    .nav-contact{border:0;background:none;color:inherit;cursor:pointer;font:inherit;font-size:12px;text-transform:uppercase;letter-spacing:.1em;padding:0}
+    .contact-close{display:none;position:fixed;z-index:22;top:calc(50% - min(350px, 50vh) + 16px);right:calc(50% - min(350px, 50vw) + 16px);width:34px;height:34px;border:0;border-radius:50%;background:var(--ink);color:#fff;font-size:24px;line-height:1;cursor:pointer}
+    body:has(#contact.contact-visible) #contactClose{display:block}
+    .footer-bottom{align-items:flex-start;gap:28px}
+    .footer-bottom span:nth-child(2){line-height:1.6;max-width:180px}
+    .footer-bottom span:nth-child(3){line-height:1.8;text-align:right}
+    .footer-bottom span:nth-child(3) a{display:inline-block}
+    .checkout-modal{display:none;position:fixed;inset:0;z-index:30;background:rgba(25,22,19,.58);overflow:auto;padding:5vh 20px}.checkout-modal.open{display:block}.checkout-card{background:var(--paper);max-width:980px;margin:auto;padding:38px 44px;box-shadow:0 20px 80px rgba(0,0,0,.25)}.checkout-header{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:1px solid var(--line);padding-bottom:28px;margin-bottom:28px}.checkout-header h2{font-size:clamp(36px,4vw,55px)}.modal-close{border:0;background:none;font-size:32px;cursor:pointer;color:var(--ink)}.checkout-layout{display:grid;grid-template-columns:1.35fr .65fr;gap:48px}.checkout-form fieldset{border:0;border-top:1px solid var(--line);padding:24px 0 0;margin:0 0 28px}.checkout-form legend{font:22px var(--serif);margin-bottom:18px}.checkout-form label{display:block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#71695f;margin-bottom:14px}.checkout-form input,.checkout-form select{display:block;width:100%;margin-top:7px;border:1px solid var(--line);background:#fbf8f3;padding:12px;color:var(--ink);outline-color:var(--clay);font-size:13px;text-transform:none;letter-spacing:0}.form-row{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.form-row:has(label:nth-child(3)){grid-template-columns:1.3fr .7fr .8fr}.secure-note{font-size:10px;color:#7c746a;margin:0 0 18px}.place-order{width:100%}.checkout-message{color:var(--wine);font-size:12px;text-align:center}.order-summary{background:var(--sand);padding:25px;height:max-content}.summary-item{display:flex;gap:12px;border-bottom:1px solid rgba(80,70,60,.16);padding:0 0 14px;margin:0 0 14px}.summary-item img{width:58px;height:68px;object-fit:cover}.summary-item div{flex:1}.summary-item h3{font:16px var(--serif);margin:0 0 5px}.summary-item p{font-size:12px;margin:0;color:#746c62}.summary-total{display:flex;justify-content:space-between;border-top:1px solid var(--ink);padding-top:17px;margin-top:22px}.summary-total strong{font:22px var(--serif)}
+    @media(max-width:800px){.contact-strip.contact-visible{display:block!important;padding:56px 7vw}.footer-bottom span:nth-child(3){text-align:left}.checkout-modal{padding:0}.checkout-card{min-height:100vh;padding:28px 7vw}.checkout-layout{display:block}.order-summary{margin-top:34px}.form-row,.form-row:has(label:nth-child(3)){grid-template-columns:1fr 1fr}.checkout-header{margin-bottom:22px}}
+    .product-actions{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:14px}.product-actions button{padding:10px 7px;border:1px solid var(--ink);background:transparent;color:var(--ink);font-size:9px;text-transform:uppercase;letter-spacing:.08em;cursor:pointer}.product-actions .buy-now{background:var(--ink);color:#fff}.product-actions button:hover{background:var(--wine);border-color:var(--wine);color:#fff}.cart-row{display:flex;gap:14px;padding:0 0 18px;margin:0 0 18px;border-bottom:1px solid var(--line)}.cart-row img{width:72px;height:86px;object-fit:cover}.cart-row>div{flex:1}.cart-row h3{font:18px var(--serif);margin:3px 0 8px}.cart-row p{margin:0 0 14px;color:#756e65}.cart-row button{border:0;background:none;padding:0;color:#81786f;font-size:10px;text-decoration:underline;cursor:pointer}
+    .checkout-message{display:none;color:var(--wine);background:#ead8cf;border:1px solid #c9947d;padding:12px;text-align:center;font-size:12px;line-height:1.5}.checkout-message.is-visible{display:block}.checkout-form input,.checkout-form select{color:#292622;background:#fffdf9;border-color:#a9a096}.checkout-form input::placeholder{color:#777067}
+  </style>
+</head>
+<body>
+  <div class="announcement">Complimentary shipping on orders over $75 <span>✦</span> Thoughtful goods, delivered</div>
+  <header class="site-header">
+    <a class="brand brand-full" href="#top" aria-label="Veloura Commerce LLC home">Veloura Commerce LLC</a>
+    <nav class="desktop-nav" aria-label="Primary navigation">
+      <a href="#shop">Shop</a><a href="#story">Our story</a><a href="#journal">Journal</a><button class="nav-contact" id="contactButton" type="button">Contact</button>
+    </nav>
+    <div class="header-actions">
+      <button class="text-button" id="searchButton" aria-label="Open search">Search</button>
+      <button class="cart-button" id="cartButton" aria-label="Open cart">Bag <span id="cartCount">0</span></button>
+      <button class="menu-button" id="menuButton" aria-label="Open menu">☰</button>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="contact-strip" id="contact"><div><p class="eyebrow">Contact</p><h2>We’re here<br /><em>to help.</em></h2></div><div class="contact-details"><p>Veloura Commerce LLC</p><p>30 Prestbury Sq<br />Ste 306 #166<br />Newark, DE 19713<br />United States</p><a href="tel:+13024694548">+1 302 469 4548</a><a href="mailto:support@velouracommercellc.com">support@velouracommercellc.com</a></div></section>
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="company-label">Veloura Commerce LLC</p>
+        <p class="eyebrow">New perspective · Edition 01</p>
+        <h1>Small luxuries.<br /><em>Made meaningful.</em></h1>
+        <p class="hero-intro">A considered collection of objects that make the ordinary feel a little more beautiful.</p>
+        <a class="button button-dark" href="#shop">Explore the collection <span>↗</span></a>
+      </div>
+      <div class="hero-image image-overlay">
+        <img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&w=1200&q=85" alt="Minimal ceramic vase in a sunlit room" />
+        <div class="image-caption"><span>01 / 04</span><span>Objects with intention</span></div>
+      </div>
+      <div class="hero-note">EST.<br />2024</div>
+    </section>
+
+    <section class="ticker" aria-label="Brand values"><div>DESIGNED FOR LIVING <span>✦</span> MADE TO LAST <span>✦</span> BEAUTY IN THE EVERYDAY <span>✦</span> DESIGNED FOR LIVING <span>✦</span></div></section>
+
+    <section class="section collection" id="shop">
+      <div class="section-heading"><div><p class="eyebrow">The edit</p><h2>Objects with a<br /><em>point of view.</em></h2></div><p class="section-description">Useful, tactile, and quietly distinctive. Meet the pieces we keep reaching for.</p></div>
+      <div class="category-tabs" role="tablist"><button class="active" data-filter="all">All pieces</button><button data-filter="home">Home</button><button data-filter="carry">Carry</button><button data-filter="ritual">Ritual</button></div>
+      <div class="product-grid" id="productGrid"></div>
+      <div class="centered"><a class="underlined-link" href="#shop">View all pieces <span>↗</span></a></div>
+    </section>
+
+    <section class="split-feature" id="story">
+      <div class="feature-image"><img src="https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&fit=crop&w=1100&q=85" alt="Gold jewelry and everyday objects on a wooden surface" /></div>
+      <div class="feature-copy"><p class="eyebrow">The Veloura standard</p><h2>Good things<br /><em>take time.</em></h2><p>We look for the details that make a piece worth keeping: a satisfying weight, a beautiful finish, a form that becomes familiar in your hands.</p><p>From small-batch makers to considered materials, every object in our collection earns its place.</p><a class="underlined-link" href="#journal">Read our story <span>↗</span></a></div>
+    </section>
+
+    <section class="section journal" id="journal"><div class="section-heading"><div><p class="eyebrow">From the journal</p><h2>Notes on living<br /><em>well.</em></h2></div><a class="underlined-link" href="#journal">See all stories <span>↗</span></a></div><div class="journal-grid"><article><img src="https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?auto=format&fit=crop&w=800&q=85" alt="Desk with notebook and coffee" /><p class="eyebrow">Rituals · 05.14.24</p><h3>The art of the everyday reset</h3></article><article><img src="https://images.unsplash.com/photo-1519710164239-da123dc03ef4?auto=format&fit=crop&w=800&q=85" alt="Warm modern interior" /><p class="eyebrow">Spaces · 04.28.24</p><h3>A softer way to make a home</h3></article><article><img src="https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?auto=format&fit=crop&w=800&q=85" alt="Clothing rack with neutral garments" /><p class="eyebrow">Perspective · 04.02.24</p><h3>Less, but better: a useful wardrobe</h3></article></div></section>
+
+    <section class="newsletter"><div><p class="eyebrow">A note from Veloura</p><h2>Make room for<br /><em>the good stuff.</em></h2></div><div class="newsletter-form"><p>Occasional notes on new arrivals, thoughtful living, and the things worth knowing about.</p><form id="newsletterForm"><label class="sr-only" for="email">Email address</label><input id="email" type="email" placeholder="Your email address" required /><button type="submit">Sign me up <span>↗</span></button></form><small id="formMessage">No noise. Just good things, now and then.</small></div></section>
+  </main>
+
+  <footer class="site-footer"><div class="footer-top"><a class="brand brand-full" href="#top">Veloura Commerce LLC</a><p>Considered goods<br />for everyday rituals.</p><div class="footer-links"><div><p class="eyebrow">Explore</p><a href="#shop">Shop all</a><a href="#story">Our story</a><a href="#journal">Journal</a></div><div><p class="eyebrow">Help</p><a href="#contact">Contact</a><a href="#">Shipping & returns</a><a href="#">FAQs</a></div><div><p class="eyebrow">Follow</p><a href="#">Instagram</a><a href="#">Pinterest</a></div></div></div><div class="footer-bottom"><span>© 2024 Veloura Commerce LLC</span><span>30 Prestbury Sq, Ste 306 #166 · Newark, DE 19713</span><span><a href="tel:+13024694548">+1 302 469 4548</a> · <a href="mailto:support@velouracommercellc.com">support@velouracommercellc.com</a></span></div></footer>
+
+  <div class="cart-drawer" id="cartDrawer" aria-hidden="true"><div class="drawer-header"><h2>Your bag <span id="drawerCount">0</span></h2><button id="closeCart" aria-label="Close cart">×</button></div><div class="cart-items" id="cartItems"><div class="empty-cart">Your bag is waiting for something lovely.</div></div><div class="drawer-footer"><div><span>Subtotal</span><strong id="cartTotal">$0</strong></div><button class="button button-dark checkout-button">Checkout <span>↗</span></button><small>Shipping and taxes calculated at checkout.</small></div></div><div class="drawer-backdrop" id="backdrop"></div>
+  <div class="search-modal" id="searchModal"><button id="closeSearch" aria-label="Close search">×</button><p class="eyebrow">Search Veloura</p><input autofocus placeholder="What are you looking for?" /></div>
+  <section class="checkout-modal" id="checkoutModal" aria-hidden="true"><div class="checkout-card"><div class="checkout-header"><div><p class="eyebrow">Veloura checkout</p><h2>Complete your <em>order.</em></h2></div><button class="modal-close" id="closeCheckout" type="button" aria-label="Close checkout">×</button></div><div class="checkout-layout"><form id="checkoutForm" class="checkout-form"><fieldset><legend>Shipping address</legend><div class="form-row"><label>First name<input name="firstName" required autocomplete="given-name" /></label><label>Last name<input name="lastName" required autocomplete="family-name" /></label></div><label>Address<input name="shippingAddress" required autocomplete="street-address" /></label><div class="form-row"><label>City<input name="city" required autocomplete="address-level2" /></label><label>State<input name="state" required autocomplete="address-level1" /></label><label>ZIP code<input name="zip" required autocomplete="postal-code" /></label></div><label>Country<select name="country" required><option value="">Select country</option><option>United States</option><option>Canada</option><option>United Kingdom</option></select></label></fieldset><fieldset><legend>Payment information</legend><label>Cardholder name<input name="cardName" required autocomplete="cc-name" /></label><label>Card number<input name="cardNumber" inputmode="numeric" minlength="12" maxlength="19" placeholder="1234 5678 9012 3456" required autocomplete="cc-number" /></label><div class="form-row"><label>Expiry date<input name="expiry" placeholder="MM / YY" maxlength="7" required autocomplete="cc-exp" /></label><label>CVV<input name="cvv" inputmode="numeric" minlength="3" maxlength="4" required autocomplete="cc-csc" /></label></div><label>Billing address<input name="billingAddress" required autocomplete="billing street-address" /></label></fieldset><p class="secure-note">⌁ Secure checkout · Your payment details are encrypted</p><button class="button button-dark place-order" type="submit">Place order <span>↗</span></button><p class="checkout-message" id="checkoutMessage"></p></form><aside class="order-summary"><p class="eyebrow">Your order</p><div id="checkoutItems"></div><div class="summary-total"><span>Total</span><strong id="checkoutTotal">$0</strong></div></aside></div></div></section>
+  <button class="contact-close" id="contactClose" type="button" aria-label="Close contact information">×</button>
+  <script src="app.js"></script>
+</body>
+</html>
