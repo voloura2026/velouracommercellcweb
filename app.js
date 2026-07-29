@@ -209,11 +209,20 @@ function generateOrderId() {
   return `#VEL-${Math.floor(10000 + Math.random() * 90000)}`;
 }
 
-function openOrderConfirmation({ fullName, phone, shippingAddress, city, total }) {
+function formatShippingAddress(address) {
+  return [
+    address.addressLine1,
+    address.addressLine2,
+    `${address.city}${address.state ? `, ${address.state}` : ''}${address.zipCode ? ` ${address.zipCode}` : ''}`,
+    address.country
+  ].filter(Boolean);
+}
+
+function openOrderConfirmation({ fullName, phone, shippingAddress, total }) {
   orderId.textContent = generateOrderId();
   orderSummaryName.textContent = fullName || 'Guest';
   orderContact.textContent = phone || 'Not provided';
-  orderAddress.textContent = [shippingAddress, city].filter(Boolean).join(', ') || 'Not provided';
+  orderAddress.textContent = shippingAddress.length ? shippingAddress.join('\n') : 'Not provided';
   orderTotal.textContent = formatCurrency(total);
   orderModal.classList.add('open');
   orderModal.setAttribute('aria-hidden', 'false');
@@ -299,9 +308,21 @@ checkoutForm.addEventListener('submit', (event) => {
   const formData = new FormData(checkoutForm);
   const fullName = String(formData.get('fullName') || '').trim();
   const phone = String(formData.get('phone') || '').trim();
-  const shippingAddress = String(formData.get('shippingAddress') || '').trim();
+  const addressLine1 = String(formData.get('addressLine1') || '').trim();
+  const addressLine2 = String(formData.get('addressLine2') || '').trim();
   const city = String(formData.get('city') || '').trim();
+  const stateName = String(formData.get('state') || '').trim();
+  const zipCode = String(formData.get('zipCode') || '').trim();
+  const country = String(formData.get('country') || '').trim();
   const total = getCartTotal();
+  const shippingAddress = formatShippingAddress({
+    addressLine1,
+    addressLine2,
+    city,
+    state: stateName,
+    zipCode,
+    country
+  });
 
   checkoutForm.reset();
   checkoutForm.querySelector('input[value="Cash on Delivery"]').checked = true;
