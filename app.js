@@ -27,7 +27,8 @@ const checkoutMessage = document.querySelector('#checkoutMessage');
 const orderModal = document.querySelector('#orderModal');
 const orderId = document.querySelector('#orderId');
 const orderSummaryName = document.querySelector('#orderSummaryName');
-const orderPayment = document.querySelector('#orderPayment');
+const orderContact = document.querySelector('#orderContact');
+const orderAddress = document.querySelector('#orderAddress');
 const orderTotal = document.querySelector('#orderTotal');
 const contactPanel = document.querySelector('#contact');
 const categoryTabs = Array.from(document.querySelectorAll('.category-tabs button'));
@@ -205,15 +206,14 @@ function closeCheckout() {
 }
 
 function generateOrderId() {
-  const timestamp = Date.now().toString(36).toUpperCase();
-  const suffix = Math.random().toString(36).slice(2, 6).toUpperCase();
-  return `VLR-${timestamp}-${suffix}`;
+  return `#VEL-${Math.floor(10000 + Math.random() * 90000)}`;
 }
 
-function openOrderConfirmation({ fullName, paymentMethod, total }) {
+function openOrderConfirmation({ fullName, phone, shippingAddress, city, total }) {
   orderId.textContent = generateOrderId();
   orderSummaryName.textContent = fullName || 'Guest';
-  orderPayment.textContent = paymentMethod;
+  orderContact.textContent = phone || 'Not provided';
+  orderAddress.textContent = [shippingAddress, city].filter(Boolean).join(', ') || 'Not provided';
   orderTotal.textContent = formatCurrency(total);
   orderModal.classList.add('open');
   orderModal.setAttribute('aria-hidden', 'false');
@@ -298,17 +298,19 @@ checkoutForm.addEventListener('submit', (event) => {
 
   const formData = new FormData(checkoutForm);
   const fullName = String(formData.get('fullName') || '').trim();
-  const paymentMethod = String(formData.get('paymentMethod') || 'Cash on Delivery');
+  const phone = String(formData.get('phone') || '').trim();
+  const shippingAddress = String(formData.get('shippingAddress') || '').trim();
+  const city = String(formData.get('city') || '').trim();
   const total = getCartTotal();
 
   checkoutForm.reset();
   checkoutForm.querySelector('input[value="Cash on Delivery"]').checked = true;
 
+  openOrderConfirmation({ fullName, phone, shippingAddress, city, total });
   state.cart = [];
   updateCart();
   renderCheckout();
   closeCheckout();
-  openOrderConfirmation({ fullName, paymentMethod, total });
 });
 
 document.querySelector('#newsletterForm').addEventListener('submit', (event) => {
